@@ -1,4 +1,6 @@
 const express = require("express");
+const swaggerUi = require("swagger-ui-express");
+const openapi = require("./openapi");
 
 const app = express();
 const port = Number(process.env.PORT || 3000);
@@ -67,14 +69,12 @@ app.delete("/students/:id", (req, res) => {
   res.status(204).end();
 });
 
-app.listen(port, "0.0.0.0", () => {
-  console.log("CS121 API listening on port " + port);
-});
-const swaggerUi = require("swagger-ui-express");
-const openapi = require("./openapi");
-
 app.get("/openapi.json", (req, res) => {
   res.json(openapi);
 });
 
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(openapi));
+
+app.listen(port, "0.0.0.0", () => {
+  console.log("CS121 API listening on port " + port);
+});
